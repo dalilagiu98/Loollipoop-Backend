@@ -17,6 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping
     public Page<User> getAllUsers(@RequestParam (defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "10") int size,
@@ -29,14 +30,6 @@ public class UserController {
         return this.userService.findById(id);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public User save(@RequestBody @Validated NewUserRequestDTO body, BindingResult validation){
-        if (validation.hasErrors()){
-            throw new BadRequestException(validation.getAllErrors());
-        }
-        return userService.save(body);
-    }
 
     @PutMapping("/{userId}")
     public User updateById(@PathVariable long id, @RequestBody @Validated NewUserRequestDTO body, BindingResult validation){

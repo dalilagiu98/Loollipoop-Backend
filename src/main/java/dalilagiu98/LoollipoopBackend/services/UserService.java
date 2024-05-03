@@ -50,4 +50,8 @@ public class UserService {
         User found = this.findById(id);
         this.usersDAO.delete(found);
     }
+
+    public User findByEmail(String email){
+        return this.usersDAO.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
+    }
 }

@@ -31,7 +31,7 @@ public class User {
     @OneToMany(mappedBy = "userWhoMadeReview")
     private List<Review> madeReview;
     @OneToMany(mappedBy = "userWhoReceivedReview")
-    private List<UserReview> receivedReview;
+    private List<UserReview> receivedReview = new ArrayList<>();
     @OneToMany(mappedBy = "owner")
     private List<Loo> looList;
 
@@ -46,7 +46,6 @@ public class User {
         this.cashBalance = 0;
         this.roles = Collections.singleton(UserRole.GUEST);
         this.madeReview = new ArrayList<>();
-        this.receivedReview = new ArrayList<>();
         this.looList = new ArrayList<>();
     }
 
