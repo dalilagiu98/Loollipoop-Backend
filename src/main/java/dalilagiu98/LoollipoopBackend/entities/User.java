@@ -1,5 +1,6 @@
 package dalilagiu98.LoollipoopBackend.entities;
 
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,19 +11,28 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
 public class User {
     //ATTRIBUTES LIST:
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String surname;
     private String email;
     private String password;
+    private String avatarUrl;
     @Setter(AccessLevel.NONE)
     private double rate;
     private double cashBalance;
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
     private Set<UserRole> roles = new HashSet<>();
+    @OneToMany(mappedBy = "userWhoMadeReview")
     private List<Review> madeReview;
+    @OneToMany(mappedBy = "userWhoReceivedReview")
     private List<UserReview> receivedReview;
+    @OneToMany(mappedBy = "owner")
     private List<Loo> looList;
 
     //CONSTRUCTOR:
