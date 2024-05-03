@@ -1,7 +1,9 @@
 package dalilagiu98.LoollipoopBackend.services;
 
 import dalilagiu98.LoollipoopBackend.entities.User;
+import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
 import dalilagiu98.LoollipoopBackend.exceptions.NotFoundException;
+import dalilagiu98.LoollipoopBackend.payloads.NewUserRequestDTO;
 import dalilagiu98.LoollipoopBackend.repositories.UsersDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,5 +27,27 @@ public class UserService {
         return this.usersDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
-    public User save()
+    public User save(NewUserRequestDTO payload){
+        this.usersDAO.findByEmail(payload.email()).ifPresent(
+                user -> {
+                    throw new BadRequestException("Email " + payload.email() + " has already used!");
+                }
+        );
+        User newUser = new User(payload.name(), payload.surname(), payload.email(), payload.password(), "https://ui-avatars.com/api/?name=" + payload.name() + "+" + payload.surname());
+
+        return usersDAO.save(newUser);
+    }
+
+    public User update(long id, NewUserRequestDTO updatedUser) {
+        User found = this.findById(id);
+        found.setName(updatedUser.name() == null ? found.getName() : updatedUser.name());
+        found.setSurname(updatedUser.surname() == null ? found.getSurname() : updatedUser.surname());
+        found.setPassword(updatedUser.password() == null ? found.getPassword() : updatedUser.password());
+        return usersDAO.save(found);
+    }
+
+    public void delete(long id){
+        User found = this.findById(id);
+        this.usersDAO.delete(found);
+    }
 }

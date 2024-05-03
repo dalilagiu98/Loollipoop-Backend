@@ -36,11 +36,12 @@ public class User {
     private List<Loo> looList;
 
     //CONSTRUCTOR:
-    public User(String name, String surname, String email, String password){
+    public User(String name, String surname, String email, String password, String avatarUrl){
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.avatarUrl = avatarUrl;
         this.rate = setRate();
         this.cashBalance = 0;
         this.roles = Collections.singleton(UserRole.GUEST);
