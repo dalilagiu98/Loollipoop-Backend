@@ -10,12 +10,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
     @Autowired
-    UsersDAO usersDAO;
+    private UsersDAO usersDAO;
+    @Autowired
+    private PasswordEncoder bcrypt;
+
 
     public Page<User> getAllUser(int page, int size, String sort){
         if(size > 50 ) size = 50;
@@ -33,7 +37,7 @@ public class UserService {
                     throw new BadRequestException("Email " + payload.email() + " has already used!");
                 }
         );
-        User newUser = new User(payload.name(), payload.surname(), payload.email(), payload.password(), "https://ui-avatars.com/api/?name=" + payload.name() + "+" + payload.surname());
+        User newUser = new User(payload.name(), payload.surname(), payload.email(), bcrypt.encode(payload.password()), "https://ui-avatars.com/api/?name=" + payload.name() + "+" + payload.surname());
 
         return usersDAO.save(newUser);
     }
