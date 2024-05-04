@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import org.springframework.security.access.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,12 @@ public class ExceptionsHandler {
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED) // ---> 401
     public ErrorResponseDTO handleUnauthorized(UnauthorizedException exception) {
+        return new ErrorResponseDTO(exception.getMessage(), LocalDateTime.now());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN) // --->403
+    public ErrorResponseDTO handleForbidden(AccessDeniedException exception){
         return new ErrorResponseDTO(exception.getMessage(), LocalDateTime.now());
     }
 
