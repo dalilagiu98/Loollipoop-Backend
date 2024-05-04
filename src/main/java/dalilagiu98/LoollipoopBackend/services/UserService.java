@@ -1,5 +1,7 @@
 package dalilagiu98.LoollipoopBackend.services;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
 import dalilagiu98.LoollipoopBackend.exceptions.NotFoundException;
@@ -12,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 public class UserService {
@@ -19,6 +24,8 @@ public class UserService {
     private UsersDAO usersDAO;
     @Autowired
     private PasswordEncoder bcrypt;
+    @Autowired
+    private Cloudinary cloudinary;
 
 
     public Page<User> getAllUser(int page, int size, String sort){
@@ -57,5 +64,13 @@ public class UserService {
 
     public User findByEmail(String email){
         return this.usersDAO.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
+    }
+
+    public User changeAvatar(long id, MultipartFile img) throws IOException{
+        User found = this.findById(id);
+        String url = (String) cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap()).get("url");
+        found.setAvatarUrl(url);
+        usersDAO.save(found);
+        return found;
     }
 }

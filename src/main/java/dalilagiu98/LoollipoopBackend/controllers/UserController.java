@@ -12,6 +12,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/users")
@@ -61,5 +64,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProfile(@AuthenticationPrincipal User currentAuthenticatedUser){
         this.userService.delete(currentAuthenticatedUser.getId());
+    }
+
+    @PatchMapping("/me/avatar")
+    public User changeAvatar(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestParam("avatar") MultipartFile img) throws IOException {
+        return this.userService.changeAvatar(currentAuthenticatedUser.getId(), img);
     }
 }
