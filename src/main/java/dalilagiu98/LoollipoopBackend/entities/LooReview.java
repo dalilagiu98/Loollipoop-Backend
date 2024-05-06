@@ -18,4 +18,10 @@ public class LooReview extends Review {
     @ManyToOne
     @JoinColumn(name = "id_loo_that_received_review")
     private Loo looThatReceivedReview;
+
+    //CONSTRUCTOR:
+    public LooReview(int score, String description, User userWhoMadeReview, Loo looThatReceivedReview){
+        super( score,  description, userWhoMadeReview);
+        this.looThatReceivedReview = looThatReceivedReview;
+    }
 }

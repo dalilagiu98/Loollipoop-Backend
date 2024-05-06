@@ -6,7 +6,6 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Review {
@@ -21,4 +20,10 @@ public abstract class Review {
     @JoinColumn(name = "id_user_who_made_review")
     private User userWhoMadeReview;
 
+    //CONSTRUCTORS:
+    public Review(int score, String description, User userWhoMadeReview){
+        this.score = score;
+        this.description = description;
+        this.userWhoMadeReview = userWhoMadeReview;
+    }
 }

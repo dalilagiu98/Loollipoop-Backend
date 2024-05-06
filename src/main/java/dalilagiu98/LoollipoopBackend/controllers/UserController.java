@@ -4,8 +4,11 @@ import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooResponseDTO;
+import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewRequestDTO;
+import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewResponseDTO;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
 import dalilagiu98.LoollipoopBackend.services.LooService;
+import dalilagiu98.LoollipoopBackend.services.ReviewService;
 import dalilagiu98.LoollipoopBackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +29,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private LooService looService;
+    @Autowired
+    private ReviewService reviewService;
 
 //--------------------------------CRUD--------------------------------
     @GetMapping
@@ -42,6 +47,12 @@ public class UserController {
         return this.userService.findById(userId);
     }
 
+
+    @PostMapping("{userId}/reviews")
+    @ResponseStatus(HttpStatus.CREATED)
+    public NewReviewResponseDTO save(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody NewReviewRequestDTO payload, @PathVariable long userId){
+        return new NewReviewResponseDTO(this.reviewService.createUserReview(currentAuthenticatedUser.getId(), payload, userId).getId());
+    }
 
     @PutMapping("/{userId}")
     public User updateById(@PathVariable long userId, @RequestBody @Validated NewUserRequestDTO body, BindingResult validation){

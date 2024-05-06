@@ -1,5 +1,6 @@
 package dalilagiu98.LoollipoopBackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,6 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIgnoreProperties({"receivedReviews"})
 @Entity
 public class Loo {
     //ATTRIBUTES LIST:
