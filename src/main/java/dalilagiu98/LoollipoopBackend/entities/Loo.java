@@ -1,11 +1,9 @@
 package dalilagiu98.LoollipoopBackend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @Getter
 @Setter
@@ -15,6 +13,7 @@ public class Loo {
     //ATTRIBUTES LIST:
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private long id;
     private String name;
     private String address;
@@ -26,7 +25,7 @@ public class Loo {
     private String description;
     private String imageLoo;
     @OneToMany(mappedBy = "looThatReceivedReview")
-    private List<LooReview> receivedReviews;
+    private List<LooReview> receivedReviews = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
@@ -34,7 +33,7 @@ public class Loo {
     private Advertising advertising;
 
     //CONSTRUCTOR:
-    public Loo(String name, String address, String longitude, String latitude, String description){
+    public Loo(String name, String address, String longitude, String latitude, String description, User owner){
         this.name = name;
         this.address = address;
         this.longitude = longitude;
@@ -42,8 +41,9 @@ public class Loo {
         this.looState = LooState.BUSY;
         this.rate = setRate();
         this.description = description;
-
+        this.owner = owner;
     }
+
 
     //METHODS:
     //-Method to set Rate based on the score of the reviews received:
@@ -60,4 +60,11 @@ public class Loo {
     }
 
     //-Method to change state of the Loo:
+    public void toggleLooState(){
+        if(this.looState == LooState.BUSY){
+            this.looState = LooState.FREE;
+        } else {
+            this.looState = LooState.BUSY;
+        }
+    }
 }
