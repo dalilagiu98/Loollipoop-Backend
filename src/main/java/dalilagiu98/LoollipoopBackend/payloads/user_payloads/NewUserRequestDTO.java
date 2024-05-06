@@ -1,4 +1,4 @@
-package dalilagiu98.LoollipoopBackend.payloads;
+package dalilagiu98.LoollipoopBackend.payloads.user_payloads;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

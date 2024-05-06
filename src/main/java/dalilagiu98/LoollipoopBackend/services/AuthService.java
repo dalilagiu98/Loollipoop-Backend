@@ -2,7 +2,7 @@ package dalilagiu98.LoollipoopBackend.services;
 
 import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.UnauthorizedException;
-import dalilagiu98.LoollipoopBackend.payloads.UserLoginRequestDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UserLoginRequestDTO;
 import dalilagiu98.LoollipoopBackend.security.JWTTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

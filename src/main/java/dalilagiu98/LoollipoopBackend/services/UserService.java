@@ -5,7 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
 import dalilagiu98.LoollipoopBackend.exceptions.NotFoundException;
-import dalilagiu98.LoollipoopBackend.payloads.NewUserRequestDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
 import dalilagiu98.LoollipoopBackend.repositories.UsersDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

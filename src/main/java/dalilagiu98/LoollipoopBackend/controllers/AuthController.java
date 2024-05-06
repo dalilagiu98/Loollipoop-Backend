@@ -1,11 +1,10 @@
 package dalilagiu98.LoollipoopBackend.controllers;
 
-import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
-import dalilagiu98.LoollipoopBackend.payloads.NewUserRequestDTO;
-import dalilagiu98.LoollipoopBackend.payloads.NewUserResponseDTO;
-import dalilagiu98.LoollipoopBackend.payloads.UserLoginRequestDTO;
-import dalilagiu98.LoollipoopBackend.payloads.UserLoginResponseDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserResponseDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UserLoginRequestDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UserLoginResponseDTO;
 import dalilagiu98.LoollipoopBackend.services.AuthService;
 import dalilagiu98.LoollipoopBackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

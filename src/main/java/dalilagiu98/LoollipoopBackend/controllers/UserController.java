@@ -2,7 +2,10 @@ package dalilagiu98.LoollipoopBackend.controllers;
 
 import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
-import dalilagiu98.LoollipoopBackend.payloads.NewUserRequestDTO;
+import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooRequestDTO;
+import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooResponseDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
+import dalilagiu98.LoollipoopBackend.services.LooService;
 import dalilagiu98.LoollipoopBackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,8 +24,10 @@ import java.io.IOException;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private LooService looService;
 
-
+//--------------------------------CRUD--------------------------------
     @GetMapping
     @PreAuthorize("hasAnyAuthority('[GUEST, HOST]')")
     public Page<User> getAllUsers(@RequestParam (defaultValue = "0") int page,
@@ -50,6 +55,7 @@ public class UserController {
         this.userService.delete(userId);
     }
 
+    //--------------------------------PERSONAL PROFILE--------------------------------
     @GetMapping("/me")
     public User getProfile(@AuthenticationPrincipal User currentAuthenticatedUser){
         return currentAuthenticatedUser;
@@ -69,5 +75,11 @@ public class UserController {
     @PatchMapping("/me/avatar")
     public User changeAvatar(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestParam("avatar") MultipartFile img) throws IOException {
         return this.userService.changeAvatar(currentAuthenticatedUser.getId(), img);
+    }
+
+    @PostMapping("/me/createLoo")
+    @ResponseStatus(HttpStatus.CREATED)
+    public NewLooResponseDTO saveLoo(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody NewLooRequestDTO body) {
+        return new NewLooResponseDTO(this.looService.createLoo(currentAuthenticatedUser.getId(), body).getId());
     }
 }
