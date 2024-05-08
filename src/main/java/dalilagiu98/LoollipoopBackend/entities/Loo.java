@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIgnoreProperties({"receivedReviews"})
+@JsonIgnoreProperties({"receivedReviews", "advertisingList"})
 @Entity
 public class Loo {
     //ATTRIBUTES LIST:
@@ -31,8 +31,8 @@ public class Loo {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
-    @OneToOne(mappedBy = "loo")
-    private Advertising advertising;
+    @OneToMany(mappedBy = "loo")
+    private List<Advertising> advertisingList;
 
     //CONSTRUCTOR:
     public Loo(String name, String address, String longitude, String latitude, String description, User owner){

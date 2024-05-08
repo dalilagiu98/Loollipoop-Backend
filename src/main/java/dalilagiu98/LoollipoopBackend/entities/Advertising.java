@@ -19,7 +19,15 @@ public class Advertising {
     private String url;
     private int duration;
     private double amount;
-    @OneToOne
+    @ManyToOne
     private Loo loo;
+
+    //CONSTRUCTORS:
+    public Advertising( int duration, double amount, Loo loo){
+        this.url = "https://j.gifs.com/wj6wor.gif";
+        this.duration = duration;
+        this.amount = amount;
+        this.loo = loo;
+    }
 
 }

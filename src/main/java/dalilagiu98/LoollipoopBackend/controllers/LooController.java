@@ -1,9 +1,11 @@
 package dalilagiu98.LoollipoopBackend.controllers;
 
+import dalilagiu98.LoollipoopBackend.entities.Advertising;
 import dalilagiu98.LoollipoopBackend.entities.Loo;
 import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewResponseDTO;
+import dalilagiu98.LoollipoopBackend.services.AdvertisingService;
 import dalilagiu98.LoollipoopBackend.services.LooService;
 import dalilagiu98.LoollipoopBackend.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class LooController {
     private LooService looService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private AdvertisingService advertisingService;
 
     @GetMapping("/{looId}")
     public Loo findById(@PathVariable long looId){
@@ -34,6 +38,12 @@ public class LooController {
     @ResponseStatus(HttpStatus.CREATED)
     public NewReviewResponseDTO save(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody NewReviewRequestDTO payload,@PathVariable long looId){
         return new NewReviewResponseDTO(this.reviewService.createLooReview(currentAuthenticatedUser.getId(), payload, looId).getId());
+    }
+
+    @PostMapping("/{looId}/advertising")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Advertising save(@PathVariable long looId){
+        return this.advertisingService.createAdvertising(looId);
     }
 
     @GetMapping("/myLoos")
