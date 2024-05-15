@@ -69,8 +69,13 @@ public class User implements UserDetails {
     }
 
     //-Method to add HOST role to User
-    public void addHostRole() {
-        roles.add(UserRole.HOST);
+    public void toggleHostRole() {
+        if(roles.contains(UserRole.HOST)) {
+            roles.remove(UserRole.HOST);
+        } else {
+            roles.add(UserRole.HOST);
+        }
+
     }
 
     //METHOD TAKEN BY USER DETAILS INTERFACE:

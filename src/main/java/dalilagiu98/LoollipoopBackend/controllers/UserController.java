@@ -88,6 +88,10 @@ public class UserController {
         return this.userService.changeAvatar(currentAuthenticatedUser.getId(), img);
     }
 
+    @PatchMapping("/me/roles")
+    public User setHostRole(@AuthenticationPrincipal User currentAuthenticatedUser) {
+        return this.userService.setHostRole(currentAuthenticatedUser.getId());
+    }
     @PostMapping("/me/createLoo")
     @ResponseStatus(HttpStatus.CREATED)
     public NewLooResponseDTO saveLoo(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody NewLooRequestDTO body) {

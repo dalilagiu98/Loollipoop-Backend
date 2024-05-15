@@ -44,7 +44,7 @@ public class UserService {
                     throw new BadRequestException("Email " + payload.email() + " has already used!");
                 }
         );
-        User newUser = new User(payload.name(), payload.surname(), payload.email(), bcrypt.encode(payload.password()), "https://ui-avatars.com/api/?name=" + payload.name() + "+" + payload.surname());
+        User newUser = new User(payload.name(), payload.surname(), payload.email(), bcrypt.encode(payload.password()), "https://ui-avatars.com/api/?name=" + payload.name() + "+" + payload.surname() + "&background=fbc2c8");
 
         return usersDAO.save(newUser);
     }
@@ -64,6 +64,12 @@ public class UserService {
 
     public User findByEmail(String email){
         return this.usersDAO.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
+    }
+
+    public User setHostRole(long id) {
+        User found = this.findById(id);
+        found.toggleHostRole();
+        return this.usersDAO.save(found);
     }
 
     public User changeAvatar(long id, MultipartFile img) throws IOException{
