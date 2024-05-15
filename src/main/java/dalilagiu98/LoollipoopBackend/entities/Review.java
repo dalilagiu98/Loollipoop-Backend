@@ -3,6 +3,8 @@ package dalilagiu98.LoollipoopBackend.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,6 +18,7 @@ public abstract class Review {
     private long id;
     private int score;
     private String description;
+    private LocalDate dateReview;
     @ManyToOne
     @JoinColumn(name = "id_user_who_made_review")
     private User userWhoMadeReview;
@@ -24,6 +27,7 @@ public abstract class Review {
     public Review(int score, String description, User userWhoMadeReview){
         this.score = score;
         this.description = description;
+        this.dateReview = LocalDate.now();
         this.userWhoMadeReview = userWhoMadeReview;
     }
 }
