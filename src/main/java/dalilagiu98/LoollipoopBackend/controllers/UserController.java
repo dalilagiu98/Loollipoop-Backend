@@ -92,7 +92,7 @@ public class UserController {
     public User setHostRole(@AuthenticationPrincipal User currentAuthenticatedUser) {
         return this.userService.setHostRole(currentAuthenticatedUser.getId());
     }
-    @PostMapping("/me/createLoo")
+    @PostMapping("/me/loos")
     @ResponseStatus(HttpStatus.CREATED)
     public NewLooResponseDTO saveLoo(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody NewLooRequestDTO body) {
         return new NewLooResponseDTO(this.looService.createLoo(currentAuthenticatedUser.getId(), body).getId());
