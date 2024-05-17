@@ -3,6 +3,7 @@ package dalilagiu98.LoollipoopBackend.controllers;
 import dalilagiu98.LoollipoopBackend.entities.Advertising;
 import dalilagiu98.LoollipoopBackend.entities.Loo;
 import dalilagiu98.LoollipoopBackend.entities.User;
+import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewResponseDTO;
 import dalilagiu98.LoollipoopBackend.services.AdvertisingService;
@@ -12,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+        import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -61,4 +62,8 @@ public class LooController {
         return this.looService.changeImage(looId, img);
     }
 
+    @PutMapping("/myLoos/{looId}/details")
+    public Loo changeDetails(@PathVariable long looId, @RequestBody NewLooRequestDTO updatedLoo) {
+        return this.looService.update(looId, updatedLoo);
+    }
 }
