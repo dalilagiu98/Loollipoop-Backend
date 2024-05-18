@@ -33,7 +33,10 @@ public class LooController {
         return this.looService.findById(looId);
     }
 
-
+    @GetMapping("/searchByPosition")
+    public List<Loo> findByLatitudeAndLongitudePrefix (@RequestParam String latPrefix, @RequestParam String longPrefix) {
+        return this.looService.findByLongitudeAndLatitudePrefix(latPrefix, longPrefix);
+    }
 
     @PostMapping("/{looId}/reviews")
     @ResponseStatus(HttpStatus.CREATED)

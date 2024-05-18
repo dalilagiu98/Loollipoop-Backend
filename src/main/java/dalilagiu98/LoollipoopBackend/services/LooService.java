@@ -76,4 +76,8 @@ public class LooService {
         return loosDAO.findByOwnerId(userId);
     }
 
+    public List<Loo> findByLongitudeAndLatitudePrefix (String latPrefix, String longPrefix) {
+        return this.loosDAO.findByLatitudeAndLongitudePrefix(latPrefix, longPrefix);
+    }
+
 }
