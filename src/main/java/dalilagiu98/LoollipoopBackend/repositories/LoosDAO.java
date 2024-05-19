@@ -14,4 +14,7 @@ public interface LoosDAO extends JpaRepository<Loo, Long> {
 
     @Query("SELECT l FROM Loo l WHERE l.latitude LIKE :latPrefix% AND l.longitude LIKE :longPrefix%")
     List <Loo> findByLatitudeAndLongitudePrefix (@Param("latPrefix") String latPrefix, @Param("longPrefix") String longPrefix);
+
+    @Query("SELECT l FROM Loo l WHERE l.address ILIKE %:address%")
+    List<Loo> findByAddress(@Param("address") String address);
 }

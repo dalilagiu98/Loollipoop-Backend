@@ -38,6 +38,11 @@ public class LooController {
         return this.looService.findByLongitudeAndLatitudePrefix(latPrefix, longPrefix);
     }
 
+    @GetMapping("/searchByAddress")
+    public List<Loo> findByAddress(@RequestParam String address) {
+        return this.looService.findByAddress(address);
+    }
+
     @PostMapping("/{looId}/reviews")
     @ResponseStatus(HttpStatus.CREATED)
     public NewReviewResponseDTO save(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody NewReviewRequestDTO payload,@PathVariable long looId){
@@ -68,5 +73,11 @@ public class LooController {
     @PutMapping("/myLoos/{looId}/details")
     public Loo changeDetails(@PathVariable long looId, @RequestBody NewLooRequestDTO updatedLoo) {
         return this.looService.update(looId, updatedLoo);
+    }
+
+    @DeleteMapping("/myLoos/{looId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteLoo (@PathVariable long looId) {
+        this.looService.delete(looId);
     }
 }

@@ -26,12 +26,12 @@ public class Loo {
     private double rate;
     private String description;
     private String imageLoo;
-    @OneToMany(mappedBy = "looThatReceivedReview")
+    @OneToMany(mappedBy = "looThatReceivedReview", cascade = CascadeType.REMOVE)
     private List<LooReview> receivedReviews = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
-    @OneToMany(mappedBy = "loo")
+    @OneToMany(mappedBy = "loo", cascade = CascadeType.REMOVE)
     private List<Advertising> advertisingList;
 
     //CONSTRUCTOR:

@@ -32,11 +32,11 @@ public class User implements UserDetails {
     private double cashBalance;
     @Enumerated(EnumType.STRING)
     private Set<UserRole> roles = new HashSet<>();
-    @OneToMany(mappedBy = "userWhoMadeReview")
+    @OneToMany(mappedBy = "userWhoMadeReview", cascade = CascadeType.REMOVE)
     private List<Review> madeReview;
-    @OneToMany(mappedBy = "userWhoReceivedReview")
+    @OneToMany(mappedBy = "userWhoReceivedReview", cascade = CascadeType.REMOVE)
     private List<UserReview> receivedReview = new ArrayList<>();
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private List<Loo> looList;
 
     //CONSTRUCTOR:

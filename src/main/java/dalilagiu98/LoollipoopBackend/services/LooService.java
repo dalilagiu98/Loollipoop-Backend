@@ -80,4 +80,8 @@ public class LooService {
         return this.loosDAO.findByLatitudeAndLongitudePrefix(latPrefix, longPrefix);
     }
 
+    public List<Loo> findByAddress(String address) {
+        return this.loosDAO.findByAddress(address);
+    }
+
 }
