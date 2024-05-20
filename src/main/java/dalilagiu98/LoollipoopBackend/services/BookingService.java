@@ -72,4 +72,10 @@ public class BookingService {
         found.changeLooReview();
         return this.bookingDAO.save(found);
     }
+
+    public Booking changeAdvertisingSeen (long id){
+        Booking found = this.findById(id);
+        found.changeAdvertisingSeen();
+        return this.bookingDAO.save(found);
+    }
 }

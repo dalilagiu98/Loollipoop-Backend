@@ -33,4 +33,9 @@ public class BookingController {
     public Booking changeLooReview (@PathVariable long bookingId) {
         return this.bookingService.changeLooReview(bookingId);
     }
+
+    @PutMapping("/{bookingId}/advertising")
+    public Booking changeAdvertisingSeen (@PathVariable long bookingId) {
+        return this.bookingService.changeAdvertisingSeen(bookingId);
+    }
 }

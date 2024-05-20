@@ -6,6 +6,7 @@ import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
 import dalilagiu98.LoollipoopBackend.exceptions.NotFoundException;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UpdateCashBalanceRequestDTO;
 import dalilagiu98.LoollipoopBackend.repositories.UsersDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -78,5 +79,17 @@ public class UserService {
         found.setAvatarUrl(url);
         usersDAO.save(found);
         return found;
+    }
+
+    public User changeCashBalanceHost (long id, UpdateCashBalanceRequestDTO payload) {
+        User found = this.findById(id);
+        found.changeCashBalanceHost(payload.amount());
+        return this.usersDAO.save(found);
+    }
+
+    public User changeCashBalanceGuest (long id, UpdateCashBalanceRequestDTO payload) {
+        User found = this.findById(id);
+        found.changeCashBalanceGuest(payload.amount());
+        return this.usersDAO.save(found);
     }
 }

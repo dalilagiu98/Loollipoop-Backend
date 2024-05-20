@@ -8,6 +8,7 @@ import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooResponseDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewResponseDTO;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UpdateCashBalanceRequestDTO;
 import dalilagiu98.LoollipoopBackend.services.BookingService;
 import dalilagiu98.LoollipoopBackend.services.LooService;
 import dalilagiu98.LoollipoopBackend.services.ReviewService;
@@ -66,6 +67,11 @@ public class UserController {
         else return userService.update(userId, body);
     }
 
+    @PutMapping("/{userId}/cashHost")
+    public User changeCashBalanceHost (@PathVariable long userId, @RequestBody UpdateCashBalanceRequestDTO payload) {
+        return this.userService.changeCashBalanceHost(userId, payload);
+    }
+
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable long userId){
@@ -102,6 +108,11 @@ public class UserController {
     @GetMapping("/me/bookings")
     public List<Booking> getBookingByUser (@AuthenticationPrincipal User currentAuthenticatedUser){
         return this.bookingService.findByUserId(currentAuthenticatedUser.getId());
+    }
+
+    @PutMapping("/me/cashGuest")
+    public User changeCashBalanceGuest (@AuthenticationPrincipal User currentAutheticatedUser, @RequestBody UpdateCashBalanceRequestDTO payload) {
+        return this.userService.changeCashBalanceGuest(currentAutheticatedUser.getId(), payload);
     }
 
     @GetMapping("me/loos/bookings")

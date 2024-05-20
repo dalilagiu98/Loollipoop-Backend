@@ -20,6 +20,7 @@ public class Booking {
     private BookingState bookingState;
     private boolean isUserReviewDone;
     private boolean isLooReviewDone;
+    private boolean isAdvertisingSeen;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -32,6 +33,7 @@ public class Booking {
         this.bookingState = BookingState.IN_PROGRESS;
         this.isUserReviewDone = false;
         this.isLooReviewDone = false;
+        this.isAdvertisingSeen = false;
         this.user = user;
         this.loo = loo;
     }
@@ -43,5 +45,9 @@ public class Booking {
 
     public void changeLooReview () {
         this.isLooReviewDone = true;
+    }
+
+    public void changeAdvertisingSeen () {
+        this.isAdvertisingSeen = true;
     }
 }

@@ -80,6 +80,14 @@ public class User implements UserDetails {
 
     }
 
+    public void changeCashBalanceHost(double amount) {
+        this.setCashBalance(this.cashBalance + (amount * 0.7));
+    }
+
+    public void changeCashBalanceGuest(double amount) {
+        this.setCashBalance(this.cashBalance + (amount * 0.3));
+    }
+
     //METHOD TAKEN BY USER DETAILS INTERFACE:
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
