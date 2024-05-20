@@ -1,5 +1,6 @@
 package dalilagiu98.LoollipoopBackend.controllers;
 
+import dalilagiu98.LoollipoopBackend.entities.Booking;
 import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooRequestDTO;
@@ -7,6 +8,7 @@ import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooResponseDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewResponseDTO;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
+import dalilagiu98.LoollipoopBackend.services.BookingService;
 import dalilagiu98.LoollipoopBackend.services.LooService;
 import dalilagiu98.LoollipoopBackend.services.ReviewService;
 import dalilagiu98.LoollipoopBackend.services.UserService;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -31,6 +34,9 @@ public class UserController {
     private LooService looService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private BookingService bookingService;
+
 
 //--------------------------------CRUD--------------------------------
     @GetMapping
@@ -91,6 +97,16 @@ public class UserController {
     @PatchMapping("/me/roles")
     public User setHostRole(@AuthenticationPrincipal User currentAuthenticatedUser) {
         return this.userService.setHostRole(currentAuthenticatedUser.getId());
+    }
+
+    @GetMapping("/me/bookings")
+    public List<Booking> getBookingByUser (@AuthenticationPrincipal User currentAuthenticatedUser){
+        return this.bookingService.findByUserId(currentAuthenticatedUser.getId());
+    }
+
+    @GetMapping("me/loos/bookings")
+    public List<Booking> getBookingByLooOwnerId (@AuthenticationPrincipal User currentAuthenticatedUser) {
+        return this.bookingService.findByLooOwnerId(currentAuthenticatedUser.getId());
     }
     @PostMapping("/me/loos")
     @ResponseStatus(HttpStatus.CREATED)

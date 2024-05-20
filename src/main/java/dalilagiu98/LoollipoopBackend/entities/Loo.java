@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIgnoreProperties({"receivedReviews", "advertisingList"})
+@JsonIgnoreProperties({"receivedReviews", "advertisingList", "bookingList"})
 @Entity
 public class Loo {
     //ATTRIBUTES LIST:
@@ -26,6 +26,7 @@ public class Loo {
     private double rate;
     private String description;
     private String imageLoo;
+    private boolean booked;
     @OneToMany(mappedBy = "looThatReceivedReview", cascade = CascadeType.REMOVE)
     private List<LooReview> receivedReviews = new ArrayList<>();
     @ManyToOne
@@ -33,6 +34,8 @@ public class Loo {
     private User owner;
     @OneToMany(mappedBy = "loo", cascade = CascadeType.REMOVE)
     private List<Advertising> advertisingList;
+    @OneToMany(mappedBy = "loo", cascade = CascadeType.REMOVE)
+    private List<Booking> bookingList;
 
     //CONSTRUCTOR:
     public Loo(String name, String address, String longitude, String latitude, String description, User owner){
@@ -43,6 +46,7 @@ public class Loo {
         this.looState = LooState.BUSY;
         this.rate = setRate();
         this.description = description;
+        this.booked = false;
         this.owner = owner;
     }
 
@@ -67,6 +71,14 @@ public class Loo {
             this.looState = LooState.FREE;
         } else {
             this.looState = LooState.BUSY;
+        }
+    }
+
+    public void toggleLooBooked (){
+        if(this.booked == false) {
+            this.booked = true;
+        } else {
+            this.booked = false;
         }
     }
 }

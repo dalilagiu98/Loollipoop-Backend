@@ -67,6 +67,12 @@ public class LooService {
         return this.loosDAO.save(found);
     }
 
+    public Loo changeBooked(long id){
+        Loo found = this.findById(id);
+        found.toggleLooBooked();
+        return this.loosDAO.save(found);
+    }
+
     public void delete(long id){
         Loo found = this.findById(id);
         this.loosDAO.delete(found);

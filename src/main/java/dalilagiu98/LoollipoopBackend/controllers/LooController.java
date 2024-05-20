@@ -1,12 +1,14 @@
 package dalilagiu98.LoollipoopBackend.controllers;
 
 import dalilagiu98.LoollipoopBackend.entities.Advertising;
+import dalilagiu98.LoollipoopBackend.entities.Booking;
 import dalilagiu98.LoollipoopBackend.entities.Loo;
 import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewResponseDTO;
 import dalilagiu98.LoollipoopBackend.services.AdvertisingService;
+import dalilagiu98.LoollipoopBackend.services.BookingService;
 import dalilagiu98.LoollipoopBackend.services.LooService;
 import dalilagiu98.LoollipoopBackend.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class LooController {
     private ReviewService reviewService;
     @Autowired
     private AdvertisingService advertisingService;
+    @Autowired
+    private BookingService bookingService;
 
     @GetMapping("/{looId}")
     public Loo findById(@PathVariable long looId){
@@ -55,6 +59,12 @@ public class LooController {
         return this.advertisingService.createAdvertising(looId);
     }
 
+    @PostMapping("/{looId}/bookings")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Booking createBooking(@AuthenticationPrincipal User currentUserAuthenticated, @PathVariable long looId) {
+        return this.bookingService.save(currentUserAuthenticated.getId(), looId);
+    }
+
     @GetMapping("/myLoos")
     public List<Loo> getMyLoos(@AuthenticationPrincipal User currentAuthenticatedUser) {
         return this.looService.findLoosByUserId(currentAuthenticatedUser.getId());
@@ -65,6 +75,11 @@ public class LooController {
         return this.looService.changeState(looId);
     }
 
+    @PatchMapping("/myLoos/{looId}/changeBooked")
+    public Loo changeBooked(@PathVariable long looId) {
+        return this.looService.changeBooked(looId);
+    }
+
     @PatchMapping("/myLoos/{looId}/looImage")
     public Loo changeImage(@PathVariable long looId, @RequestParam("looImage")MultipartFile img) throws IOException {
         return this.looService.changeImage(looId, img);
@@ -73,6 +88,11 @@ public class LooController {
     @PutMapping("/myLoos/{looId}/details")
     public Loo changeDetails(@PathVariable long looId, @RequestBody NewLooRequestDTO updatedLoo) {
         return this.looService.update(looId, updatedLoo);
+    }
+
+    @GetMapping("/myLoos/{looId}/bookings")
+    public List<Booking> getBookingsByLooId(@PathVariable long looId) {
+        return this.bookingService.findByLooId(looId);
     }
 
     @DeleteMapping("/myLoos/{looId}")
