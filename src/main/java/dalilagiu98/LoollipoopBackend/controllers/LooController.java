@@ -1,9 +1,6 @@
 package dalilagiu98.LoollipoopBackend.controllers;
 
-import dalilagiu98.LoollipoopBackend.entities.Advertising;
-import dalilagiu98.LoollipoopBackend.entities.Booking;
-import dalilagiu98.LoollipoopBackend.entities.Loo;
-import dalilagiu98.LoollipoopBackend.entities.User;
+import dalilagiu98.LoollipoopBackend.entities.*;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewResponseDTO;
@@ -51,6 +48,11 @@ public class LooController {
     @ResponseStatus(HttpStatus.CREATED)
     public NewReviewResponseDTO save(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody NewReviewRequestDTO payload,@PathVariable long looId){
         return new NewReviewResponseDTO(this.reviewService.createLooReview(currentAuthenticatedUser.getId(), payload, looId).getId());
+    }
+
+    @GetMapping("{looId}/reviews")
+    public List<LooReview> findReviewByLooId (@PathVariable long looId) {
+        return this.reviewService.findByLooId(looId);
     }
 
     @PostMapping("/{looId}/advertising")

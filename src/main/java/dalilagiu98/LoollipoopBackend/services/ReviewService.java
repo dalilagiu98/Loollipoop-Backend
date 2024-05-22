@@ -8,6 +8,8 @@ import dalilagiu98.LoollipoopBackend.repositories.ReviewsDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReviewService {
     @Autowired
@@ -33,5 +35,13 @@ public class ReviewService {
         NewLooRequestDTO looToUpdate = new NewLooRequestDTO(loo.getName(), loo.getAddress(), loo.getLongitude(), loo.getLatitude(), loo.getDescription());
         this.looService.update(looId, looToUpdate);
         return this.reviewsDAO.save(newReview);
+    }
+
+    public List<LooReview> findByLooId (long looId) {
+        return this.reviewsDAO.findByLooId(looId);
+    }
+
+    public List<UserReview> findByUserId (long userId) {
+        return this.reviewsDAO.findByUserId(userId);
     }
 }

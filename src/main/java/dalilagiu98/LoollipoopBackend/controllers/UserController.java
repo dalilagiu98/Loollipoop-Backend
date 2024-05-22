@@ -2,6 +2,7 @@ package dalilagiu98.LoollipoopBackend.controllers;
 
 import dalilagiu98.LoollipoopBackend.entities.Booking;
 import dalilagiu98.LoollipoopBackend.entities.User;
+import dalilagiu98.LoollipoopBackend.entities.UserReview;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooResponseDTO;
@@ -59,6 +60,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public NewReviewResponseDTO save(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody NewReviewRequestDTO payload, @PathVariable long userId){
         return new NewReviewResponseDTO(this.reviewService.createUserReview(currentAuthenticatedUser.getId(), payload, userId).getId());
+    }
+
+    @GetMapping("{userId}/reviews")
+    public List<UserReview> findReviewByUserId (@PathVariable long userId) {
+        return this.reviewService.findByUserId(userId);
     }
 
     @PutMapping("/{userId}")
