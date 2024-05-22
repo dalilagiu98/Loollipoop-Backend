@@ -1,10 +1,8 @@
 package dalilagiu98.LoollipoopBackend.controllers;
 
+import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
-import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
-import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserResponseDTO;
-import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UserLoginRequestDTO;
-import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UserLoginResponseDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.*;
 import dalilagiu98.LoollipoopBackend.services.AuthService;
 import dalilagiu98.LoollipoopBackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +31,10 @@ public class AuthController {
             throw new BadRequestException(validation.getAllErrors());
         }
         return new NewUserResponseDTO(this.userService.save(body).getId());
+    }
+
+    @PutMapping("/password")
+    public User changePasswordByEmail (@RequestBody ChangePasswordDTO payload,@RequestParam String email) {
+        return this.userService.changePasswordByEmail(email, payload);
     }
 }

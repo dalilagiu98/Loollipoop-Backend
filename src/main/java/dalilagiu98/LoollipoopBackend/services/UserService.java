@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
 import dalilagiu98.LoollipoopBackend.exceptions.NotFoundException;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.ChangePasswordDTO;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UpdateCashBalanceRequestDTO;
 import dalilagiu98.LoollipoopBackend.repositories.UsersDAO;
@@ -48,6 +49,18 @@ public class UserService {
         User newUser = new User(payload.name(), payload.surname(), payload.email(), bcrypt.encode(payload.password()), "https://ui-avatars.com/api/?name=" + payload.name() + "+" + payload.surname() + "&background=fbc2c8");
 
         return usersDAO.save(newUser);
+    }
+
+    public User changePasswordByUserId (long userId, ChangePasswordDTO payload) {
+        User found = this.findById(userId);
+        found.setPassword(bcrypt.encode(payload.password()));
+        return this.usersDAO.save(found);
+    }
+
+    public User changePasswordByEmail (String email, ChangePasswordDTO payload) {
+        User found = this.findByEmail(email);
+        found.setPassword(bcrypt.encode(payload.password()));
+        return this.usersDAO.save(found);
     }
 
     public User update(long id, NewUserRequestDTO updatedUser) {

@@ -8,6 +8,7 @@ import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooResponseDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewResponseDTO;
+import dalilagiu98.LoollipoopBackend.payloads.user_payloads.ChangePasswordDTO;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UpdateCashBalanceRequestDTO;
 import dalilagiu98.LoollipoopBackend.services.BookingService;
@@ -99,6 +100,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProfile(@AuthenticationPrincipal User currentAuthenticatedUser){
         this.userService.delete(currentAuthenticatedUser.getId());
+    }
+
+    @PutMapping("/me/password")
+    public User changePasswordByUserId (@RequestBody ChangePasswordDTO payload, @AuthenticationPrincipal User currentAuthenticatedUser) {
+        return this.userService.changePasswordByUserId(currentAuthenticatedUser.getId(), payload);
     }
 
     @PatchMapping("/me/avatar")
