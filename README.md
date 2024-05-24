@@ -6,11 +6,11 @@
 
 Welcome to Loollipoop! Our app connects users with private restrooms (loos) for a clean and convenient experience. Whether you need a loo or want to offer one, Loollipoop makes it easy. 🌍🚽
 
-## Frontend Repository🐈‍⬛:
+## Frontend Repository 🐈‍⬛
 
 https://github.com/dalilagiu98/Loollipoop-Frontend
 
-## Features🌟 📱
+## Features 🌟📱
 
 📍🔍 Find a Loo: Search for private restrooms by address or your current location. <br>
 🏡🛁 List Your Loo: Make your private restroom available for others. <br>
@@ -19,7 +19,7 @@ https://github.com/dalilagiu98/Loollipoop-Frontend
 
 ## Technologies Used 💻
 
-### Frontend:
+### Frontend
 
 ![Static Badge](https://img.shields.io/badge/HTML-darkorange?logo=html5)
 ![Static Badge](https://img.shields.io/badge/CSS-darkblue?logo=css3)
@@ -31,7 +31,7 @@ https://github.com/dalilagiu98/Loollipoop-Frontend
 ![Static Badge](https://img.shields.io/badge/Redux-20232A?logo=redux)
 
 
-### Backend:
+### Backend
 
 ![Static Badge](https://img.shields.io/badge/Java-white)
 ![Static Badge](https://img.shields.io/badge/Spring-green?logo=spring)
@@ -47,11 +47,11 @@ https://github.com/dalilagiu98/Loollipoop-Frontend
 🔒 Spring Security: Security features for Spring applications. <br>
 ☁️ Cloudinary: Manages image and video storage. <br>
 
-### Database:
+### Database
 
 ![Static Badge](https://img.shields.io/badge/PostgreSQL-blue)
 
-## Setup: 🔧
+## Setup 🔧
 
 ### Front-end Setup
 
@@ -61,7 +61,7 @@ to install frontend dependencies. <br>
 In your file env.properties configure API token for external services (Positionstack and Geoapify). <br>
 Run ![Static Badge](https://img.shields.io/badge/run%20dev-lightgrey?logo=npm) to start the frontend development server. <br>
 
-### Access the application:
+### Access the application
 
 Frontend: Open a web browser and navigate to http://localhost:5173 (or the configured port). 🚀 <br>
 Backend: The API endpoints are available at http://localhost:3001 (or the configured port). ▶️ <br>
