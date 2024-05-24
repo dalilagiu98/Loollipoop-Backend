@@ -15,7 +15,7 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIgnoreProperties({"password", "accountNonExpired", "accountNonLocked", "credentialsNonExpired", "username", "authorities", "looList", "receivedReview", "madeReview", "bookingList", })
+@JsonIgnoreProperties({"password", "accountNonExpired", "accountNonLocked", "credentialsNonExpired", "username", "authorities", "looList", "receivedReview", "madeReview", "bookingList", "feedbackList" })
 @Entity
 public class User implements UserDetails {
     //ATTRIBUTES LIST:
@@ -40,7 +40,8 @@ public class User implements UserDetails {
     private List<Loo> looList;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Booking> bookingList;
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Feedback> feedbackList;
     //CONSTRUCTOR:
     public User(String name, String surname, String email, String password, String avatarUrl){
         this.name = name;

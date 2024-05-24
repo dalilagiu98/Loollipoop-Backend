@@ -1,9 +1,11 @@
 package dalilagiu98.LoollipoopBackend.controllers;
 
 import dalilagiu98.LoollipoopBackend.entities.Booking;
+import dalilagiu98.LoollipoopBackend.entities.Feedback;
 import dalilagiu98.LoollipoopBackend.entities.User;
 import dalilagiu98.LoollipoopBackend.entities.UserReview;
 import dalilagiu98.LoollipoopBackend.exceptions.BadRequestException;
+import dalilagiu98.LoollipoopBackend.payloads.FeedbackRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.loo_payloads.NewLooResponseDTO;
 import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewRequestDTO;
@@ -11,10 +13,7 @@ import dalilagiu98.LoollipoopBackend.payloads.review_payload.NewReviewResponseDT
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.ChangePasswordDTO;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.NewUserRequestDTO;
 import dalilagiu98.LoollipoopBackend.payloads.user_payloads.UpdateCashBalanceRequestDTO;
-import dalilagiu98.LoollipoopBackend.services.BookingService;
-import dalilagiu98.LoollipoopBackend.services.LooService;
-import dalilagiu98.LoollipoopBackend.services.ReviewService;
-import dalilagiu98.LoollipoopBackend.services.UserService;
+import dalilagiu98.LoollipoopBackend.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -39,6 +38,8 @@ public class UserController {
     private ReviewService reviewService;
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private FeedbackService feedbackService;
 
 
 //--------------------------------CRUD--------------------------------
@@ -135,5 +136,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public NewLooResponseDTO saveLoo(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody NewLooRequestDTO body) {
         return new NewLooResponseDTO(this.looService.createLoo(currentAuthenticatedUser.getId(), body).getId());
+    }
+
+    @PostMapping("/me/feedback")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Feedback createFeedback (@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody FeedbackRequestDTO payload) {
+        System.out.println("Received feedback: " + payload);
+        return this.feedbackService.save(payload, currentAuthenticatedUser.getId());
     }
 }
